@@ -40,6 +40,6 @@ public class Smartwatch : Device, IPowerNotifier
     
     public void NotifyAboutLowBattery()
     {
-        Console.WriteLine("Battery percentage is less 20%");
+        Console.WriteLine("Battery percentage is less than 20%");
     }
 }
