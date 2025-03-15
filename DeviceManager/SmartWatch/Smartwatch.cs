@@ -1,5 +1,3 @@
-using DeviceManager.interfaces;
-
 namespace DeviceManager.SmartWatch;
 
 public class Smartwatch : Device, IPowerNotifier
