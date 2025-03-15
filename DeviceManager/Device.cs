@@ -1,10 +1,10 @@
 namespace DeviceManager;
 
-public abstract class Device
+public abstract class Device(int id, string name)
 {
-    public int    Id;
-    public string Name;
-    public bool   IsTurnedOn;
+    public int    Id = id;
+    public string Name = name;
+    public bool   IsTurnedOn = false;
 
     public virtual void TurnOn()
     {

@@ -4,27 +4,26 @@ namespace DeviceManager.SmartWatch;
 
 public class Smartwatch : Device, IPowerNotifier
 {
-    private int _batteryPercentage; 
+    private int _batteryPercentage;
+
     public int BatteryPercentage
     {
         get => _batteryPercentage;
         set
         {
-            if (value is < 0 or > 100) 
+            if (value is < 0 or > 100)
             {
                 throw new ArgumentOutOfRangeException("BatteryPercentage");
             }
 
             _batteryPercentage = value;
-            
+
             if (_batteryPercentage < 20) NotifyAboutLowBattery();
         }
     }
-
-    public Smartwatch(int id, string name,  int batteryPercentage)
+    
+    public Smartwatch(int id, string name, int batteryPercentage) : base(id, name)
     {
-        Id = id;
-        Name = name;
         BatteryPercentage = batteryPercentage;
     }
 
@@ -36,6 +35,8 @@ public class Smartwatch : Device, IPowerNotifier
         }
         
         BatteryPercentage = Math.Max(0, BatteryPercentage - 10);
+        
+        base.TurnOn();
     }
     
     public void NotifyAboutLowBattery()
