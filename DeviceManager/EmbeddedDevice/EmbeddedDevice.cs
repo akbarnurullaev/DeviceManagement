@@ -1,4 +1,3 @@
-using System.Data.Common;
 using System.Text.RegularExpressions;
 
 namespace DeviceManager.EmbeddedDevice;
@@ -19,7 +18,7 @@ public class EmbeddedDevice : Device
         }
     }
 
-    public EmbeddedDevice(int id, string name, string ipAddress, string networkName) : base(id, name)
+    public EmbeddedDevice(string id, string name, string ipAddress, string networkName) : base(id, name)
     {
         _ipAddress = ipAddress;
         IpAddress = ipAddress;
@@ -38,7 +37,7 @@ public class EmbeddedDevice : Device
         IsTurnedOn = true;
     }
 
-    public override string ToCSV()
+    public override string ToCsv()
     {
         return $"ED,{Id},{Name},{IpAddress},{NetworkName}";
     }

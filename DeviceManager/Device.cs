@@ -1,8 +1,8 @@
 namespace DeviceManager;
 
-public abstract class Device(int id, string name)
+public abstract class Device(string id, string name)
 {
-    public int    Id = id;
+    public string Id = id;
     public string Name = name;
     public bool   IsTurnedOn = false;
 
@@ -16,5 +16,5 @@ public abstract class Device(int id, string name)
         IsTurnedOn = false;
     }
 
-    public abstract string ToCSV();
+    public abstract string ToCsv();
 }

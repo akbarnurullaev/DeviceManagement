@@ -20,7 +20,7 @@ public class Smartwatch : Device, IPowerNotifier
         }
     }
     
-    public Smartwatch(int id, string name, int batteryPercentage) : base(id, name)
+    public Smartwatch(string id, string name, int batteryPercentage) : base(id, name)
     {
         BatteryPercentage = batteryPercentage;
     }
@@ -42,9 +42,9 @@ public class Smartwatch : Device, IPowerNotifier
         Console.WriteLine("Battery percentage is less than 20%");
     }
     
-    public override string ToCSV()
+    public override string ToCsv()
     {
-        return $"SW,{Id},{Name},{BatteryPercentage}";
+        return $"SW-{Id},{Name},{BatteryPercentage}%";
     }
     
     public override string ToString() => $"Smartwatch - ID: {Id}, Name: {Name}, Battery: {BatteryPercentage}%, On: {IsTurnedOn}";

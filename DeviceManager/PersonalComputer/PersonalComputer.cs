@@ -1,8 +1,8 @@
 namespace DeviceManager.PersonalComputer;
 
-public class PersonalComputer(int id, string name, string operatingSystem) : Device(id, name)
+public class PersonalComputer(string id, string name, string? operatingSystem) : Device(id, name)
 {
-    public string OperatingSystem { get; set; } = operatingSystem;
+    public string? OperatingSystem { get; set; } = operatingSystem;
 
     public override void TurnOn()
     {
@@ -14,9 +14,9 @@ public class PersonalComputer(int id, string name, string operatingSystem) : Dev
         base.TurnOn();
     }
     
-    public override string ToCSV()
+    public override string ToCsv()
     {
-        return $"P,{Id},{Name},{OperatingSystem}";
+        return $"P-{Id},{Name}{(string.IsNullOrWhiteSpace(OperatingSystem) ? "" : $",{OperatingSystem}")}";
     }
     
     public override string ToString() => $"PC - ID: {Id}, Name: {Name}, OS: {OperatingSystem}, On: {IsTurnedOn}";
