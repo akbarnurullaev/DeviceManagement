@@ -41,4 +41,11 @@ public class Smartwatch : Device, IPowerNotifier
     {
         Console.WriteLine("Battery percentage is less than 20%");
     }
+    
+    public override string ToCSV()
+    {
+        return $"SW,{Id},{Name},{BatteryPercentage}";
+    }
+    
+    public override string ToString() => $"Smartwatch - ID: {Id}, Name: {Name}, Battery: {BatteryPercentage}%, On: {IsTurnedOn}";
 }

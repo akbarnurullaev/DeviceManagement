@@ -15,4 +15,6 @@ public abstract class Device(int id, string name)
     {
         IsTurnedOn = false;
     }
+
+    public abstract string ToCSV();
 }

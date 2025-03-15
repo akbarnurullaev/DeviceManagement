@@ -1,3 +1,4 @@
+using System.Data.Common;
 using System.Text.RegularExpressions;
 
 namespace DeviceManager.EmbeddedDevice;
@@ -36,4 +37,11 @@ public class EmbeddedDevice : Device
         Connect();
         IsTurnedOn = true;
     }
+
+    public override string ToCSV()
+    {
+        return $"ED,{Id},{Name},{IpAddress},{NetworkName}";
+    }
+    
+    public override string ToString() => $"Embedded - ID: {Id}, Name: {Name}, IP: {IpAddress}, Network: {NetworkName}, On: {IsTurnedOn}";
 }

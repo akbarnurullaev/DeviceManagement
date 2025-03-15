@@ -5,18 +5,16 @@ namespace DeviceManager
     public class DeviceManager
     {
         private const int MaxCount = 15;
+        private readonly string _filePath;
         private readonly List<Device> _devices = new();
 
         public DeviceManager(string filePath)
         {
             if (!File.Exists(filePath))
                 throw new FileNotFoundException($"File not found: {filePath}");
+            
+            _filePath = filePath;
 
-            LoadDevicesFromFile(filePath);
-        }
-
-        private void LoadDevicesFromFile(string filePath)
-        {
             foreach (var line in File.ReadLines(filePath))
             {
                 var tokens = line.Split(',');
@@ -38,7 +36,7 @@ namespace DeviceManager
                 };
 
                 AddDevice(device);
-            }
+            };
         }
 
         private void AddDevice(Device device)
@@ -48,6 +46,8 @@ namespace DeviceManager
                 Console.WriteLine("Device list is full. Cannot add more devices.");
                 return;
             }
+
+            File.AppendAllText(_filePath, device.ToCSV() + Environment.NewLine);
             _devices.Add(device);
         }
 
