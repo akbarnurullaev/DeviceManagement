@@ -20,13 +20,13 @@ namespace DeviceManager
                 try
                 {
                     var tokens = line.Split(',');
-                    if (tokens.Length < 2 || tokens.Length > 5)
+                    if (tokens.Length is < 2 or > 5)
                     {
                         Console.WriteLine($"Skipping invalid line: {line}");
                         continue;
                     }
 
-                    var id = tokens[0]; // ID as a string
+                    var id = tokens[0];
                     var type = id.Split('-')[0];
 
                     if (string.IsNullOrWhiteSpace(id) || !id.StartsWith(type))
@@ -73,41 +73,84 @@ namespace DeviceManager
                 return;
             }
 
-            File.AppendAllText(_filePath, device.ToCsv() + Environment.NewLine);
             Devices.Add(device);
+            SaveDevicesToFile();
         }
 
-        public void RemoveDevice(string id) => Devices.RemoveAll(d => d.Id == id);
+        public void RemoveDevice(string id)
+        {
+            for (int i = Devices.Count - 1; i >= 0; i--)
+            {
+                if (Devices[i].Id == id)
+                {
+                    Devices.RemoveAt(i);
+                    SaveDevicesToFile();
+                    return;
+                }
+            }
+            
+            Console.WriteLine($"Device with ID {id} not found.");
+        }
         
         public void EditDevice(string id, string? newId, string? newName)
         {
-            var device = Devices.FirstOrDefault(d => d.Id == id);
-            
-            if (device != null)
+            object boxedDevice = GetDeviceById(id);
+
+            if (boxedDevice != null)
             {
-                device.Name = newName ?? device.Name;
-                device.Id = newId ?? device.Id;
-            };
+                Device unboxedDevice = (Device) boxedDevice;
+
+                unboxedDevice.Name = newName ?? unboxedDevice.Name;
+                unboxedDevice.Id = newId ?? unboxedDevice.Id;
+
+                SaveDevicesToFile();
+            }
+            else
+            {
+                Console.WriteLine($"Device with ID {id} not found.");
+            }
         }
 
         public void TurnOnDevice(string id)
         {
-            var device = Devices.FirstOrDefault(d => d.Id == id);
-            if (device is null)
-                Console.WriteLine($"Device with ID {id} not found.");
-            else
-                device.TurnOn();
+            GetDeviceById(id)?.TurnOn();
         }
 
         public void TurnOffDevice(string id)
         {
-            var device = Devices.FirstOrDefault(d => d.Id == id);
-            if (device is null)
-                Console.WriteLine($"Device with ID {id} not found.");
-            else
-                device.TurnOff();
+            GetDeviceById(id)?.TurnOff();
         }
 
-        public void ShowAllDevices() => Devices.ForEach(Console.WriteLine);
+        public void ShowAllDevices()
+        {
+            foreach (var device in Devices)
+            {
+                Console.WriteLine(device);
+            }
+        }
+        
+        public Device? GetDeviceById(string id)
+        {
+            foreach (var device in Devices)
+            {
+                if (device.Id == id)
+                {
+                    return device;
+                }
+            }
+            return null;
+        }
+
+        private void SaveDevicesToFile()
+        {
+            var lines = new List<string>();
+
+            foreach (var device in Devices)
+            {
+                lines.Add(device.ToCsv());
+            }
+
+            File.WriteAllLines(_filePath, lines);
+        }
     }
 }
