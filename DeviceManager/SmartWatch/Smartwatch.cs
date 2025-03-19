@@ -27,7 +27,7 @@ public class Smartwatch : Device, IPowerNotifier
 
     public override void TurnOn()
     {
-        if (BatteryPercentage == 0)
+        if (BatteryPercentage < 11)
         {
             throw new EmptyBatteryException();
         }
