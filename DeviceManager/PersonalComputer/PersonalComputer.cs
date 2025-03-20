@@ -16,7 +16,7 @@ public class PersonalComputer(string id, string name, string? operatingSystem) :
     
     public override string ToCsv()
     {
-        return $"P-{Id},{Name}{(string.IsNullOrWhiteSpace(OperatingSystem) ? "" : $",{OperatingSystem}")}";
+        return $"{Id},{Name}{(string.IsNullOrWhiteSpace(OperatingSystem) ? "" : $",{OperatingSystem}")}";
     }
     
     public override string ToString() => $"PC - ID: {Id}, Name: {Name}, OS: {OperatingSystem}, On: {IsTurnedOn}";

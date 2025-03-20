@@ -44,7 +44,7 @@ public class Smartwatch : Device, IPowerNotifier
     
     public override string ToCsv()
     {
-        return $"SW-{Id},{Name},{BatteryPercentage}%";
+        return $"{Id},{Name},{BatteryPercentage}%";
     }
     
     public override string ToString() => $"Smartwatch - ID: {Id}, Name: {Name}, Battery: {BatteryPercentage}%, On: {IsTurnedOn}";

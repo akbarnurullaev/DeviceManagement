@@ -39,7 +39,7 @@ public class EmbeddedDevice : Device
 
     public override string ToCsv()
     {
-        return $"ED,{Id},{Name},{IpAddress},{NetworkName}";
+        return $"{Id},{Name},{IpAddress},{NetworkName}";
     }
     
     public override string ToString() => $"Embedded - ID: {Id}, Name: {Name}, IP: {IpAddress}, Network: {NetworkName}, On: {IsTurnedOn}";

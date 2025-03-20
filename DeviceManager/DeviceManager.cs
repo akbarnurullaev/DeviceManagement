@@ -94,7 +94,7 @@ namespace DeviceManager
         
         public void EditDevice(string id, string? newId, string? newName)
         {
-            object boxedDevice = GetDeviceById(id);
+            object? boxedDevice = GetDeviceById(id);
 
             if (boxedDevice != null)
             {
