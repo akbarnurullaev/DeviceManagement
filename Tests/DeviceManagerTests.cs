@@ -1,3 +1,4 @@
+using DeviceManager;
 using DeviceManager.SmartWatch;
 
 namespace Tests
@@ -20,7 +21,7 @@ namespace Tests
         [Fact]
         public void DeviceManager_ShouldThrowFileNotFound_WhenFileDoesNotExist()
         {
-            Assert.Throws<FileNotFoundException>(() => new DeviceManager.DeviceManager("non_existent_file.csv"));
+            Assert.Throws<FileNotFoundException>(() => DeviceManagerFactory.Create("non_existent_file.csv"));
         }
 
         [Fact]
@@ -33,7 +34,7 @@ namespace Tests
                 "ED-3,Embedded1,192.168.1.1,HomeNetwork"
             });
 
-            var manager = new DeviceManager.DeviceManager(TestFilePath);
+            var manager = DeviceManagerFactory.Create(TestFilePath);
 
             Assert.Equal(3, manager.Devices.Count);
         }
@@ -42,7 +43,7 @@ namespace Tests
         public void AddDevice_ShouldIncreaseDeviceCount()
         {
             CreateTestFile(Array.Empty<string>());
-            var manager = new DeviceManager.DeviceManager(TestFilePath);
+            var manager = DeviceManagerFactory.Create(TestFilePath);
 
             var newDevice = new Smartwatch("SW-4", "NewWatch", 50);
             manager.AddDevice(newDevice);
@@ -54,7 +55,7 @@ namespace Tests
         public void RemoveDevice_ShouldDecreaseDeviceCount()
         {
             CreateTestFile(new[] { "SW-1,SmartWatch1,80%" });
-            var manager = new DeviceManager.DeviceManager(TestFilePath);
+            var manager = DeviceManagerFactory.Create(TestFilePath);
 
             manager.RemoveDevice("SW-1");
 
@@ -65,7 +66,7 @@ namespace Tests
         public void EditDevice_ShouldUpdateProperties()
         {
             CreateTestFile(new[] { "SW-1,SmartWatch1,80%" });
-            var manager = new DeviceManager.DeviceManager(TestFilePath);
+            var manager = DeviceManagerFactory.Create(TestFilePath);
 
             manager.EditDevice("SW-1", newId: "SW-5", newName: "UpdatedWatch");
 
@@ -78,7 +79,7 @@ namespace Tests
         public void EditDevice_ShouldNotChange_WhenDeviceDoesNotExist()
         {
             CreateTestFile(new[] { "SW-1,SmartWatch1,80%" });
-            var manager = new DeviceManager.DeviceManager(TestFilePath);
+            var manager = DeviceManagerFactory.Create(TestFilePath);
 
             manager.EditDevice("SW-99", newId: "SW-100", newName: "NonExistingDevice");
 
@@ -93,7 +94,7 @@ namespace Tests
         public void EditDevice_ShouldChangeOnlyName_WhenNewIdIsNull()
         {
             CreateTestFile(new[] { "SW-1,SmartWatch1,80%" });
-            var manager = new DeviceManager.DeviceManager(TestFilePath);
+            var manager = DeviceManagerFactory.Create(TestFilePath);
 
             manager.EditDevice("SW-1", newId: null, newName: "NewName");
 
@@ -106,7 +107,7 @@ namespace Tests
         public void EditDevice_ShouldChangeOnlyId_WhenNewNameIsNull()
         {
             CreateTestFile(new[] { "SW-1,SmartWatch1,80%" });
-            var manager = new DeviceManager.DeviceManager(TestFilePath);
+            var manager = DeviceManagerFactory.Create(TestFilePath);
 
             manager.EditDevice("SW-1", newId: "SW-2", newName: null);
 
@@ -119,7 +120,7 @@ namespace Tests
         public void TurnOnDevice_ShouldNotThrow_WhenDeviceExists()
         {
             CreateTestFile(new[] { "SW-1,SmartWatch1,80%" });
-            var manager = new DeviceManager.DeviceManager(TestFilePath);
+            var manager = DeviceManagerFactory.Create(TestFilePath);
 
             var exception = Record.Exception(() => manager.TurnOnDevice("SW-1"));
             Assert.Null(exception);
@@ -129,7 +130,7 @@ namespace Tests
         public void TurnOnDevice_ShouldNotThrow_WhenDeviceDoesNotExist()
         {
             CreateTestFile(Array.Empty<string>());
-            var manager = new DeviceManager.DeviceManager(TestFilePath);
+            var manager = DeviceManagerFactory.Create(TestFilePath);
 
             var exception = Record.Exception(() => manager.TurnOnDevice("SW-99"));
             Assert.Null(exception);
@@ -139,7 +140,7 @@ namespace Tests
         public void ShouldTurnOffTheDevice()
         {
             CreateTestFile(new[] { "SW-1,SmartWatch1,80%" });
-            var manager = new DeviceManager.DeviceManager(TestFilePath);
+            var manager = DeviceManagerFactory.Create(TestFilePath);
 
             Record.Exception(() => manager.TurnOffDevice("SW-1"));
             var device = manager.GetDeviceById("SW-1");
@@ -151,7 +152,7 @@ namespace Tests
         {
             var deviceEntries = Enumerable.Range(1, 15).Select(i => $"SW-{i},Device{i},75%");
             CreateTestFile(deviceEntries);
-            var manager = new DeviceManager.DeviceManager(TestFilePath);
+            var manager = DeviceManagerFactory.Create(TestFilePath);
 
             var newDevice = new Smartwatch("SW-16", "OverflowWatch", 50);
             manager.AddDevice(newDevice);

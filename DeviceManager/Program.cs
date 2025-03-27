@@ -1,11 +1,12 @@
-﻿using DeviceManager.SmartWatch;
+﻿using DeviceManager;
+using DeviceManager.SmartWatch;
 
 string filePath = "db.csv"; 
 
 DeviceManager.DeviceManager manager;
 try
 {
-    manager = new DeviceManager.DeviceManager(filePath);
+    manager = DeviceManagerFactory.Create(filePath);
     Console.WriteLine("Device Manager initialized successfully.");
 }
 catch (FileNotFoundException e)
