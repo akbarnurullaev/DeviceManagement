@@ -23,7 +23,7 @@ app.UseHttpsRedirection();
 List<Device> devices = new List<Device>
 {
     new Smartwatch("SW-01", "Fitness Tracker", 85),
-    new PersonalComputer("PC-01", "Nigga boo", "Mac OS"),
+    new PersonalComputer("PC-01", "N**** boo", "Mac OS"),
 };
 
 app.MapGet("/devices", () =>
