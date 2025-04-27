@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceManager", "DeviceManager\DeviceManager.csproj", "{F0FD8C61-07B0-4C8D-A133-B9631708FEEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceManager", "src\DeviceManager\DeviceManager.csproj", "{F0FD8C61-07B0-4C8D-A133-B9631708FEEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{20ED615A-375F-4508-B3B5-4C806D5E062D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceManager.Tests", "tests\DeviceManager.Tests\DeviceManager.Tests.csproj", "{20ED615A-375F-4508-B3B5-4C806D5E062D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{551EC5F5-BD58-4873-9196-667C3EDE7453}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj", "{551EC5F5-BD58-4873-9196-667C3EDE7453}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
