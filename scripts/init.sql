@@ -15,7 +15,8 @@ GO
 CREATE TABLE Device (
     Id VARCHAR(50) PRIMARY KEY,
     Name VARCHAR(250) NOT NULL,
-    IsEnabled BIT NOT NULL
+    IsEnabled BIT NOT NULL,
+    RowVersion ROWVERSION NOT NULL
 );
 GO
 
@@ -42,6 +43,65 @@ CREATE TABLE Smartwatch (
     DeviceId VARCHAR(50) NOT NULL UNIQUE,
     FOREIGN KEY (DeviceId) REFERENCES Device(Id)
 );
+GO
+
+-- Stored Procedures
+IF OBJECT_ID('usp_InsertDevice', 'P') IS NOT NULL
+    DROP PROCEDURE usp_InsertDevice;
+GO
+CREATE PROCEDURE usp_InsertDevice
+    @Id VARCHAR(50),
+    @Name VARCHAR(250),
+    @IsEnabled BIT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    INSERT INTO Device (Id, Name, IsEnabled)
+    VALUES (@Id, @Name, @IsEnabled);
+END
+GO
+
+IF OBJECT_ID('usp_InsertEmbedded', 'P') IS NOT NULL
+    DROP PROCEDURE usp_InsertEmbedded;
+GO
+CREATE PROCEDURE usp_InsertEmbedded
+    @DeviceId VARCHAR(50),
+    @IpAddress VARCHAR(250),
+    @NetworkName VARCHAR(250)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    INSERT INTO Embedded (DeviceId, IpAddress, NetworkName)
+    VALUES (@DeviceId, @IpAddress, @NetworkName);
+END
+GO
+
+IF OBJECT_ID('usp_InsertPersonalComputer', 'P') IS NOT NULL
+    DROP PROCEDURE usp_InsertPersonalComputer;
+GO
+CREATE PROCEDURE usp_InsertPersonalComputer
+    @DeviceId VARCHAR(50),
+    @OperationSystem VARCHAR(250)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    INSERT INTO PersonalComputer (DeviceId, OperationSystem)
+    VALUES (@DeviceId, @OperationSystem);
+END
+GO
+
+IF OBJECT_ID('usp_InsertSmartwatch', 'P') IS NOT NULL
+    DROP PROCEDURE usp_InsertSmartwatch;
+GO
+CREATE PROCEDURE usp_InsertSmartwatch
+    @DeviceId VARCHAR(50),
+    @BatteryPercentage INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    INSERT INTO Smartwatch (DeviceId, BatteryPercentage)
+    VALUES (@DeviceId, @BatteryPercentage);
+END
 GO
 
 -- Seeding

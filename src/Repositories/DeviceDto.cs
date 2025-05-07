@@ -44,4 +44,9 @@ public class DeviceDto
     /// Current battery percentage (for Smartwatch devices).
     /// </summary>
     public int? BatteryPercentage { get; set; }
+
+    /// <summary>
+    /// Concurrency token (SQL rowversion) for optimistic locking.
+    /// </summary>
+    public byte[] RowVersion { get; set; } = null!;
 }

@@ -16,3 +16,8 @@ services:
       - "6969:8080"
     depends_on:
       - sqlserver
+  repositories:
+    image: repositories
+    build:
+      context: .
+      dockerfile: Repositories/Dockerfile
